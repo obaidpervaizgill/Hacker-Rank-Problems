@@ -2,7 +2,7 @@
 """
 Created on Sat Jun 10 15:56:38 2017
 
-@author: z3470247
+@author: Obaid Gill
 """
 ##################
 ###INTRODUCTION###
