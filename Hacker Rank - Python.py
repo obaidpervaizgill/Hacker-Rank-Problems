@@ -525,6 +525,388 @@ for i in range(N):
 
 print max([sum(i)%M for i in list(product(*List))])
 
+#################
+###Collections###
+#################
+#collecions.Counter()
+from collections import Counter
+from itertools import groupby
+import operator
+X = int(raw_input())
+N = raw_input().split(' ')
+Xi = int(raw_input())
+SRan = []
+for a in range(Xi):
+    SRan.append(raw_input().split(' '))
+    
+    
+CN = Counter(N)
+SReq =  [(i,j) for i,j in SRan if i in CN.keys()]
 
+def accumulate(l):#stack overflow help
+    it = groupby(l, operator.itemgetter(0))
+    for key, subiter in it:
+       yield key, [item[1] for item in subiter] 
+
+SAva = []
+for k,v in CN.items():
+    if k in dict(list(accumulate(SReq))).keys():
+        SAva.append(dict(list(accumulate(SReq)))[k][:v])
+
+print sum([int(item) for sublist in SAva for item in sublist])           
+           
+#DefaultDict Tutorial
+n,m = map(int,raw_input().split(' '))
+
+nL = []
+for i in range(n):
+    nL.append(raw_input())
+
+mL = []
+for j in range(m):
+    mL.append(raw_input())
+    
+for k in mL:
+    print ' '.join(map(str,([l+1 for l,m in list(enumerate(nL)) if m == k])))  
+
+#Collections.namedtuple()
+N = int(raw_input())
+C_ENTRY = list(raw_input().split(' '))
+
+LIST = [] 
+for i in range(N):
+    LIST.append(raw_input().split(' '))
+
+MARKS = []
+for i in LIST:
+    MARKS.append(i[C_ENTRY.index('MARKS')])
+
+SUM_MARKS = sum([int(i) for i in MARKS])    
+print (SUM_MARKS/N)
+
+#Collections.OrderedDict()
+from collections import OrderedDict 
+N = int(raw_input())  
+SL = []
+for i in range(N):
+    SL.append(raw_input().split(' '))
+    
+ordered_dictionary = OrderedDict() 
+for i in range(len(SL)):
+    if ' '.join(SL[i][:-1]) not in ordered_dictionary.keys():
+        ordered_dictionary[' '.join(SL[i][:-1])] = int(SL[i][-1]) 
+    else:
+        ordered_dictionary[' '.join(SL[i][:-1])] += int(SL[i][-1])
+
+for i in ordered_dictionary:
+    print i + ' ' + str(ordered_dictionary[i])
+           
+#Word Order
+from collections import OrderedDict 
+N = int(raw_input())  
+SL = []
+for i in range(N):
+    SL.append((''.join(raw_input().split(' ')),1))
+
+ordered_dictionary = OrderedDict() 
+for i in range(len(SL)):
+    if ' '.join(SL[i][:-1]) not in ordered_dictionary.keys():
+        ordered_dictionary[' '.join(SL[i][:-1])] = SL[i][-1] 
+    else:
+        ordered_dictionary[' '.join(SL[i][:-1])] += SL[i][-1]
+        
+print (len(ordered_dictionary.keys())) 
+
+for i in ordered_dictionary:
+    print str(ordered_dictionary[i]),  
+           
+#Collections.deque()
+from collections import deque
+N = int(raw_input())
+DQ = deque()
+LI = []
+for i in range(N):
+    LI.append(str(raw_input()))
+
+for i in range(len(LI)):
+    if LI[i][:-2] == 'append':
+        DQ.append(int(LI[i].split(' ')[-1]))
+    elif LI[i][:-2] == 'appendleft':
+        DQ.appendleft(int(LI[i].split(' ')[-1]))
+    elif LI[i][:-2] == 'p':
+        DQ.pop()  
+    elif LI[i][:-2] == 'pople':
+        DQ.popleft()    
+    else:
+        pass
+for i in DQ:
+    print i,
+
+#Most Common
+from collections import OrderedDict 
+S = list(raw_input()) 
+
+SL = []
+for i in S:
+    SL.append((i,1))
+
+ordered_dictionary = OrderedDict() 
+for i in range(len(SL)):
+    if SL[i][0] not in ordered_dictionary.keys():
+        ordered_dictionary[SL[i][0]] = SL[i][-1] 
+    else:
+        ordered_dictionary[SL[i][0]] += SL[i][-1] 
+    
+for i in sorted(ordered_dictionary.items(), key=lambda x: (-x[1], x[0]))[0:3]:
+    print str(i[0]) +' '+ str(i[1]) 
+           
+           
+#################
+##Date and Time##
+#################
+#Calendar Module           
+from datetime import date
+import calendar
+d = raw_input().split(' ')
+d = [i.lstrip('0') for i in d]
+d.reverse()  
+d = map(int,d)   
+
+my_date = date(d[0],d[2],d[1]) #y m d
+dOut = calendar.day_name[my_date.weekday()]
+print dOut.upper()  
+           
+#Time Delta
+N = int(raw_input())
+t = []
+for i in range(N*2):
+    t.append(raw_input())   
+
+from dateutil.parser import parse
+for i,j in zip([a+1 for a in range(2*2) if (a+1)%2!=0],[b+1 for b in range(2*2) if (b+1)%2==0]):
+    mytime = parse(t[i-1], fuzzy=True) -parse(t[j-1], fuzzy=True)
+    print int(abs(mytime.total_seconds()))
+
+#######################
+#Errors and Exceptions#
+#######################
+#Exceptions
+N = int(raw_input())
+for i in range(N):
+    a,b = raw_input().split(' ')
+    try:
+        print int(a)/int(b)        
+    except ValueError as e:
+        print "Error Code:",e  
+    except ZeroDivisionError as e:
+        print "Error Code:",e 
+           
+#Incorrect Regex
+import re
+N = int(raw_input())
+for _ in range(N):
+    a = raw_input()
+    try:
+        re.compile(a)
+        print "True"
+    except:
+        print "False"           
+           
+#############
+##Built-Ins##
+#############
+#Zipped!           
+from itertools import product
+N,X = map(int,raw_input().split(' '))
+
+L = []
+for i in range(X):
+    L.append(map(float,raw_input().split(' ')))
+ 
+iterate = sorted(list(product(range(X),range(N))), key = lambda x : x[1])  
+
+L2= []
+for i,j in iterate:
+    L2.append(L[i][j])
+
+for i in [L2[i:i+X] for i in xrange(0, len(L2), X)]:
+    print sum(i)/len(i)
+           
+#Input()
+x,k = map(int,raw_input().split(' '))
+print eval(raw_input()) == k
+
+#Python Evaluation
+from __future__ import print_function
+eval(raw_input()) 
+
+#Sort Data
+N,M = map(int,raw_input().split(' '))
+
+L = []
+for i in range(N):
+    L.append(map(int,raw_input().split(' ')))
+
+K = int(raw_input())
+
+LS = sorted(L, key = lambda x: x[K])    
+
+for i in range(len(LS)):
+    print (' '.join(map(str,(LS[i]))))     
+           
+#Any or All
+N = int(raw_input())
+M = map(int,raw_input().split(' '))
+
+if all([i>0 for i in M]):
+    if any([i == j for i,j in zip(M,[int(''.join(list(str(i))[::-1])) for i in M])]):
+        print ('True')
+else:
+    print ('False') 
+
+########################           
+###Python Functionals###           
+########################           
+#Map and Lambda Function
+cube = lambda x: x**3
+
+def fibonacci(n):
+    count = 0
+    L = [0,1]
+    while (count < n):
+        L.append(L[len(L)-2] + L[len(L)-1])
+        count += 1
+    return (L[0:n])
+
+#Validating Email Addresses With a Filter 
+def fun(s):
+    import re
+    return(len(re.findall(r'^[a-z0-9_\-]+@\b\w+[.]\w+$',s))>0) 
+
+#Reduce Function
+def product(fracs):
+    t = reduce(lambda x, y : x*y, fracs) 
+    return t.numerator, t.denominator   
+           
+###########
+###Numpy###
+###########
+#Arrays
+def arrays(arr):
+    import numpy
+    return(numpy.array(list(arr), float)[::-1])
+           
+#Shape and Reshape
+import numpy
+print (numpy.reshape(numpy.array(map(int,(raw_input().split(' ')))),(3,3)))
+           
+#Transpose and Flatten
+import numpy
+n,m = map(int,raw_input().split(' '))
+
+L = []
+for _ in range(n):
+    L.append(map(int, raw_input().split(' ')))
+my_array = numpy.array(L)    
+print(numpy.transpose(my_array))
+print(my_array.flatten())
+       
+#Concatenate
+import numpy
+n,m,p = map(int, raw_input().split(' '))
+L = []
+for _ in range(n+m):
+    L.append(map(int, raw_input().split(' ')))
+my_array = numpy.array(L) 
+print (my_array)
+           
+#Zeros and Ones
+import numpy
+n = map(int,raw_input().split(' '))
+nI= []
+for i in range(len(n)):
+    nI.append (n[i])
+print (numpy.zeros(tuple(nI), dtype = numpy.int))   
+print (numpy.ones(tuple(nI), dtype = numpy.int))  
+           
+#Eye and Identity
+import numpy
+n,m = map(int,raw_input().split(' '))
+print numpy.eye(n,m, k = 0)
+           
+#Array Mathematics
+import numpy as np
+n, m = map(int, input().split())
+a, b = (np.array([input().split() for _ in range(n)], dtype=int) for _ in range(2))
+print(a+b, a-b, a*b, a//b, a%b, a**b, sep='\n')
+           
+#Floor, Ceil and Rint
+import numpy
+my_array = map(float,raw_input().split(' ')) 
+print (numpy.floor(my_array))
+print (numpy.ceil(my_array))
+print (numpy.rint(my_array)) 
+           
+#Sum and Prod
+import numpy
+n,m = map(int,raw_input().split(' '))
+L = []
+for i in range(n):
+    L.append(map(int,raw_input().split(' ')))
+print (numpy.prod(numpy.sum(L, axis = 0)))
+           
+#Min and Max 
+import numpy
+n,m = map(int,raw_input().split(' '))
+L = []
+for i in range(n):
+    L.append(map(int,raw_input().split(' ')))
+print (numpy.max(numpy.min(L, axis = 1)))
+           
+#Mean, Var, and Std
+import numpy
+n,m = map(int,raw_input().split(' '))
+L = []
+for i in range(n):
+    L.append(map(int,raw_input().split(' ')))
+
+print (numpy.mean(L, axis = 1))
+print (numpy.var(L,axis = 0))    
+print (numpy.std(L))
+           
+#Dot and Cross 
+import numpy
+n = int(raw_input())
+A = []
+for i in range(n):
+    A.append(map(int,raw_input().split(' ')))
+B = []
+for i in range(n):
+    B.append(map(int,raw_input().split(' ')))    
+
+print (numpy.dot(A,B))           
+           
+#Inner and Outer
+import numpy
+A = map(int,raw_input().split(' '))        
+B = map(int,raw_input().split(' '))    
+
+print (numpy.inner(A,B))    
+print (numpy.outer(A,B))             
+
+#Polynomials  
+import numpy
+print (numpy.polyval(map(float,raw_input().split(' ')) , int(raw_input())))           
+           
+#Linear Algebra
+import numpy
+n = int(raw_input())
+A = []
+for i in range(n):
+    A.append(map(float,raw_input().split(' ')))
+print numpy.linalg.det(A)            
+           
+           
+           
   
 
