@@ -515,15 +515,14 @@ for i in SI:
 #Maximize It!
 from itertools import product 
 
-N,M = map(int,raw_input().split(' '))
+from itertools import product
+k,m  = map(int,raw_input().strip().split(" "))
 
-List = []
-for i in range(N):
-    List.append([j*j for j in 
-                (list(map(int,raw_input().split(' '))))
-                ])
+l = []
+for _ in range(k):
+    l.append([i**2 for i in map(int,raw_input().strip().split(" "))[1:]])
 
-print max([sum(i)%M for i in list(product(*List))])
+print (max([sum(i)%m for i in list(product(*l))]))
 
 #################
 ###Collections###
